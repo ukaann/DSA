@@ -1,39 +1,41 @@
 # Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-class Solution(object):
+class Solution:
     def addTwoNumbers(self, l1, l2):
-        """
-        :type l1: Optional[ListNode]
-        :type l2: Optional[ListNode]
-        :rtype: Optional[ListNode]
-        """
-
-        dummy = ListNode(0)
-        current = dummy
-        carry = 0
-
-        while l1 or l2 or carry:
-            if l1 is not None:
-                val1 = l1.val
-            else:
-                val1 = 0
-            if l2 is not None: 
-                val2 = l2.val
-            else:
-                val2 = 0
-            
-            total = val1 + val2 + carry
-            carry = total//10
-
-            current.next = ListNode(total%10)
-            current = current.next
-
-            if l1:
-                l1 = l1.next
-            if l2:
-                l2 = l2.next
-        
-        return dummy.next
+        bal = 0
+        res = ListNode()
+        tes = res
+        while l1 and l2:
+            s = l1.val + l2.val + bal
+            bal = 0
+            if (s >= 10):
+                bal = 1
+                s %= 10
+            tes.next = ListNode(s)
+            l1 = l1.next
+            l2 = l2.next
+            tes = tes.next
+        while l1:
+            s = l1.val + bal
+            bal = 0
+            if (s >= 10):
+                bal = 1
+                s %= 10
+            tes.next = ListNode(s)
+            l1 = l1.next
+            tes = tes.next
+        while l2:
+            s = l2.val + bal
+            bal = 0
+            if (s >= 10):
+                bal = 1
+                s %= 10
+            tes.next = ListNode(s)
+            l2 = l2.next
+            tes = tes.next
+        if bal == 1:
+            tes.next = ListNode(bal)
+        return res.next
