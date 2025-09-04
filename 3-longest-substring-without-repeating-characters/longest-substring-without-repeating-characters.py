@@ -4,18 +4,16 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        myset = set()
-        left = 0
-        result = 0
-
-        for right in range(len(s)):
-            while s[right] in myset:
-                myset.remove(s[left])
-                left+=1
-            myset.add(s[right])
-            result = max(result, len(myset))
-        return result
-                
+        hashMap = {}
+        wstart = 0
+        res = 0
+        for wend in range(len(s)):
+            if s[wend] in hashMap and wstart < hashMap[s[wend]]:
+                wstart = hashMap[s[wend]]
+            hashMap[s[wend]] = wend + 1
+            res = max(res, wend-wstart+1)
+        return res
+                        
 
 
         
